@@ -8,6 +8,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const artist = await getArtist(id);
         return Response.json({ artist }, { status: 200 });
     } catch (error) {
+        if (error instanceof Error) {
+            return Response.json({ message: error.message }, { status: 500 });
+        }
+
         return Response.json({ message: "Server error" }, { status: 500 });
     }
 }
